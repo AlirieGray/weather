@@ -16,7 +16,10 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <Text style={styles.city}>San Francisco</Text>
         <Text style={styles.dateText}>Thursday, October 5 </Text>
-        <Text style={styles.currentTemp}> 70˚ </Text>
+        <View style>
+            <Text style={styles.currentTemp}> 70 </Text>
+            <Text style={styles.currentTemp}> ˚ </Text>
+        </View>
         <View style={styles.daysContainer}>
           {this.getDays()}
         </View>
@@ -33,7 +36,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   city: {
-    fontSize: 40
+    fontSize: 40,
+    marginTop: 30
   },
   dateText: {
     fontSize: 24
