@@ -7,7 +7,7 @@ export default class App extends React.Component {
     const days = ["Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"];
     const temps = ["72", "70", "68", "71", "70", "72", "75"];
     return days.map(function(day, index) {
-      return <Text> {days[index]} {temps[index]} </Text>
+      return <DayTemp key={index} day={days[index]} temp={temps[index]} />
     })
   }
 
@@ -17,6 +17,9 @@ export default class App extends React.Component {
         <Text style={styles.city}>San Francisco</Text>
         <Text style={styles.dateText}>Thursday, October 5 </Text>
         <Text style={styles.currentTemp}> 70˚ </Text>
+        <View style={styles.daysContainer}>
+          {this.getDays()}
+        </View>
       </View>
     );
   }
