@@ -14,8 +14,10 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.city}>San Francisco</Text>
-        <Text style={styles.dateText}>Thursday, October 5 </Text>
+        <View style={styles.heading}>
+          <Text style={styles.city}>San Francisco</Text>
+          <Text style={styles.dateText}>Friday, October 6 </Text>
+        </View>
         <Text style={styles.currentTemp}> 70˚ </Text>
         <View style={styles.daysContainer}>
           {this.getDays()}
@@ -27,8 +29,15 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     display: 'flex',
     backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexDirection:'column',
+  },
+  heading: {
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -43,6 +52,7 @@ const styles = StyleSheet.create({
     width: '90%',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center'
   },
   currentTemp: {
     fontSize: 100,
