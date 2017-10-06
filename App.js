@@ -1,13 +1,37 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import DayTemp from './DayTemp';
+import { SECRET } from 'react-native-dotenv'
 
 export default class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      humidity: "none"
+    }
+  }
+
   getDays() {
+    this.getWeather();
     const days = ["Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"];
     const temps = ["72", "70", "68", "71", "70", "72", "75"];
     return days.map(function(day, index) {
       return <DayTemp key={index} day={days[index]} temp={temps[index]} />
+    })
+  }
+
+  getWeather() {
+    var url = "https://api.darksky.net/forecast/" + SECRET + "/" + "42.3601,-71.0589"
+    fetch(url).then((res) => {
+      return res.json();
+    }).then((json) => {
+      //console.log(json);
+      //console.log(json);
+      var weatherArray = json.daily.data;
+      for (let i = 0; i < weatherArray.length; i++) {
+        console.log(weatherArray[i].summary);
+      }
     })
   }
 
