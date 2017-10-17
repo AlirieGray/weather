@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, Text, View, TextInput, ScrollView } from 'react-native';
 import DayTemp from './DayTemp';
+import Geocoder from 'react-native-geocoding';
 import { SECRET } from 'react-native-dotenv'
+import { GOOGLE_KEY } from 'react-native-dotenv'
+
+Geocoder.setApiKey(GOOGLE_KEY);
 
 class WeatherCard extends Component {
   constructor(props) {
@@ -41,8 +45,20 @@ export default class App extends Component {
     })
   }
 
-  getWeather() {
-    var url = "https://api.darksky.net/forecast/" + SECRET + "/" + "37.7749, 122.4194"
+  getLocation(locationString) {
+    Geocoder.getFromLocation(locationString).then(
+      json => {
+        var location = json.results[0].geometry.location;
+        return(location.lat + ", " + location.lng);
+      },
+      error => {
+        alert(error);
+      }
+    );
+  }
+
+  getWeather(latlong) {
+    var url = "https://api.darksky.net/forecast/" + SECRET + "/" + latlong
     fetch(url).then((res) => {
       console.log("fetched!");
       return res.json();
@@ -66,7 +82,15 @@ export default class App extends Component {
   render() {
     // get array of JSX objects from state
     if (this.state.weather.length == 0) {
-      this.getWeather();
+      Geocoder.getFromLocation("Colosseum").then(
+      json => {
+        var location = json.results[0].geometry.location;
+        this.getWeather(location.lat + ", " + location.lng);
+      },
+      error => {
+        console.error(error);
+      }
+    );
     }
     var weatherArr = this.getDailyWeather(this.state.weather);
     return (
