@@ -31,7 +31,8 @@ export default class App extends Component {
     this.state = {
       weather: [],
       currentTemp: "",
-      location: ""
+      location: "San Francisco",
+      finalLocation: "San Francisco"
     }
   }
 
@@ -43,18 +44,6 @@ export default class App extends Component {
     return days.map((day, index) => {
       return <DayTemp key={index} day={days[index]} high={highs[index]} low={lows[index]} />
     })
-  }
-
-  getLocation(locationString) {
-    Geocoder.getFromLocation(locationString).then(
-      json => {
-        var location = json.results[0].geometry.location;
-        return(location.lat + ", " + location.lng);
-      },
-      error => {
-        alert(error);
-      }
-    );
   }
 
   getWeather(latlong) {
@@ -82,8 +71,10 @@ export default class App extends Component {
   render() {
     // get array of JSX objects from state
     if (this.state.weather.length == 0) {
-      Geocoder.getFromLocation("Colosseum").then(
+      Geocoder.getFromLocation(this.state.location).then(
       json => {
+        this.setState({finalLocation: json.results[0].address_components[0].long_name})
+
         var location = json.results[0].geometry.location;
         this.getWeather(location.lat + ", " + location.lng);
       },
@@ -97,7 +88,7 @@ export default class App extends Component {
       <View>
       <View style={styles.container}>
         <View style={styles.heading}>
-          <Text style={styles.city}>San Francisco</Text>
+          <Text style={styles.city}>{this.state.finalLocation}</Text>
           <Text style={styles.dateText}>Sunday, October 8 </Text>
         </View>
         <Text style={styles.currentTemp}> {Math.floor(this.state.currentTemp)}˚ </Text>
