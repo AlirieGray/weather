@@ -1,0 +1,9 @@
+node_modules/
+.expo/
+npm-debug.*
+.DS_Store
+.babelrc
+.env
+.flowconfig
+.watchmanconfig
+App.test.js
