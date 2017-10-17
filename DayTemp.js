@@ -10,7 +10,8 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Text> {this.props.day} </Text>
-        <Text> {this.props.temp} </Text>
+        <Text> {this.props.high} </Text>
+        <Text> {this.props.low} </Text>
       </View>
     );
   }
